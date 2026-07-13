@@ -1,0 +1,16 @@
+{
+  "name": "Hrishikesh Thakare - Full Stack Developer",
+  "short_name": "Hrishikesh Thakare",
+  "description": "Portfolio of Hrishikesh Thakare, Full Stack Developer based in Mumbai, India.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

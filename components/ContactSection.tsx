@@ -14,19 +14,83 @@ export default function ContactSection() {
   });
   const [status, setStatus] = useState<FormState>('idle');
   const [focused, setFocused] = useState<string | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
+    if (!form.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+    if (!form.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    if (!form.subject.trim()) {
+      newErrors.subject = 'Subject is required';
+    }
+    if (!form.message.trim()) {
+      newErrors.message = 'Message is required';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: '' }));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate()) return;
     setStatus('sending');
-    await new Promise((r) => setTimeout(r, 1400));
-    setStatus('sent');
+
+    const key = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY_HERE";
+    if (key === "YOUR_ACCESS_KEY_HERE") {
+      console.warn("Web3Forms access key is not set. Falling back to simulation.");
+      await new Promise((r) => setTimeout(r, 1200));
+      setStatus('sent');
+      setForm({ name: '', email: '', subject: '', message: '' });
+      return;
+    }
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: key,
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setStatus('sent');
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+    }
   };
 
   const inputStyle = (name: string): React.CSSProperties => ({
     width: '100%',
     background:
       focused === name ? 'rgba(255,255,255,.04)' : 'rgba(255,255,255,.02)',
-    border: `1px solid ${focused === name ? 'rgba(34,197,94,.4)' : 'var(--border)'}`,
+    border: `1px solid ${errors[name] ? '#EF4444' : focused === name ? 'rgba(34,197,94,.4)' : 'var(--border)'}`,
     borderRadius: 10,
     padding: '14px 18px',
     fontSize: 14,
@@ -40,7 +104,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="pg"
+      className="pg contact-section"
       style={{
         position: 'relative',
         zIndex: 2,
@@ -49,13 +113,20 @@ export default function ContactSection() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        paddingTop: 80,
-        paddingBottom: 80,
       }}
     >
       <style>{`
+        .contact-section {
+          padding-top: 80px;
+          padding-bottom: 80px;
+        }
         @media (max-width: 768px) {
-          .ct-layout { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .contact-section {
+            padding-top: 40px !important;
+            padding-bottom: 40px !important;
+            min-height: auto !important;
+          }
+          .ct-layout { grid-template-columns: 1fr !important; gap: 32px !important; }
           .ct-name-email { grid-template-columns: 1fr !important; }
         }
         @keyframes bounce {
@@ -231,10 +302,7 @@ export default function ContactSection() {
                 hours.
               </p>
               <button
-                onClick={() => {
-                  setStatus('idle');
-                  setForm({ name: '', email: '', subject: '', message: '' });
-                }}
+                onClick={() => setStatus('idle')}
                 style={{
                   marginTop: 8,
                   padding: '12px 28px',
@@ -258,6 +326,86 @@ export default function ContactSection() {
                 }}
               >
                 Send another
+              </button>
+            </div>
+          ) : status === 'error' ? (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: 400,
+                textAlign: 'center',
+                gap: 20,
+              }}
+            >
+              <div
+                style={{
+                  width: 64,
+                  height: 64,
+                  borderRadius: '50%',
+                  background: 'rgba(239,68,68,.12)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M18 6L6 18M6 6l12 12"
+                    stroke="#EF4444"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <h3
+                className="font-display"
+                style={{
+                  fontSize: 28,
+                  fontWeight: 600,
+                  letterSpacing: '-.02em',
+                }}
+              >
+                Oops!
+              </h3>
+              <p
+                style={{
+                  fontSize: 15,
+                  color: 'var(--muted)',
+                  maxWidth: 320,
+                  lineHeight: 1.6,
+                }}
+              >
+                Something went wrong. Please check your connection or try again.
+              </p>
+              <button
+                onClick={() => setStatus('idle')}
+                style={{
+                  marginTop: 8,
+                  padding: '12px 28px',
+                  borderRadius: 100,
+                  border: '1px solid var(--border)',
+                  background: 'transparent',
+                  color: 'var(--muted)',
+                  fontSize: 12,
+                  letterSpacing: '.07em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  transition: 'color .2s, border-color .2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = 'var(--text)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,.25)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'var(--muted)';
+                  e.currentTarget.style.borderColor = 'var(--border)';
+                }}
+              >
+                Try again
               </button>
             </div>
           ) : (
@@ -288,14 +436,19 @@ export default function ContactSection() {
                   </label>
                   <input
                     type="text"
-                    required
                     placeholder="Your name"
                     value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    onChange={(e) => handleChange('name', e.target.value)}
                     onFocus={() => setFocused('name')}
                     onBlur={() => setFocused(null)}
                     style={inputStyle('name')}
+                    suppressHydrationWarning={true}
                   />
+                  {errors.name && (
+                    <span style={{ fontSize: 11, color: '#EF4444', marginTop: 4 }}>
+                      {errors.name}
+                    </span>
+                  )}
                 </div>
                 <div
                   style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
@@ -312,16 +465,19 @@ export default function ContactSection() {
                   </label>
                   <input
                     type="email"
-                    required
                     placeholder="your@email.com"
                     value={form.email}
-                    onChange={(e) =>
-                      setForm({ ...form, email: e.target.value })
-                    }
+                    onChange={(e) => handleChange('email', e.target.value)}
                     onFocus={() => setFocused('email')}
                     onBlur={() => setFocused(null)}
                     style={inputStyle('email')}
+                    suppressHydrationWarning={true}
                   />
+                  {errors.email && (
+                    <span style={{ fontSize: 11, color: '#EF4444', marginTop: 4 }}>
+                      {errors.email}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -338,16 +494,19 @@ export default function ContactSection() {
                 </label>
                 <input
                   type="text"
-                  required
                   placeholder="Project enquiry / Job opportunity / Collaboration"
                   value={form.subject}
-                  onChange={(e) =>
-                    setForm({ ...form, subject: e.target.value })
-                  }
+                  onChange={(e) => handleChange('subject', e.target.value)}
                   onFocus={() => setFocused('subject')}
                   onBlur={() => setFocused(null)}
                   style={inputStyle('subject')}
+                  suppressHydrationWarning={true}
                 />
+                {errors.subject && (
+                  <span style={{ fontSize: 11, color: '#EF4444', marginTop: 4 }}>
+                    {errors.subject}
+                  </span>
+                )}
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -362,17 +521,20 @@ export default function ContactSection() {
                   Message *
                 </label>
                 <textarea
-                  required
                   rows={7}
                   placeholder="Tell me about your project, timeline, and budget..."
                   value={form.message}
-                  onChange={(e) =>
-                    setForm({ ...form, message: e.target.value })
-                  }
+                  onChange={(e) => handleChange('message', e.target.value)}
                   onFocus={() => setFocused('message')}
                   onBlur={() => setFocused(null)}
                   style={inputStyle('message')}
+                  suppressHydrationWarning={true}
                 />
+                {errors.message && (
+                  <span style={{ fontSize: 11, color: '#EF4444', marginTop: 4 }}>
+                    {errors.message}
+                  </span>
+                )}
               </div>
 
               <div

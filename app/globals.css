@@ -61,7 +61,7 @@ body {
 
 .nav-static__link:hover,
 .nav-static__link:focus-visible {
-  color: var(--text) !important;
+  color: var(--accent) !important;
 }
 
 .nav-static__cta:hover,

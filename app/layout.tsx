@@ -120,10 +120,9 @@ const siteNavigationSchema = {
   name: 'Site Navigation',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-    { '@type': 'ListItem', position: 2, name: 'About', item: `${SITE_URL}/about` },
-    { '@type': 'ListItem', position: 3, name: 'Projects', item: `${SITE_URL}/projects` },
-    { '@type': 'ListItem', position: 4, name: 'Tech Stack', item: `${SITE_URL}/stack` },
-    { '@type': 'ListItem', position: 5, name: 'Contact', item: `${SITE_URL}/contact` },
+    { '@type': 'ListItem', position: 2, name: 'Projects', item: `${SITE_URL}/projects` },
+    { '@type': 'ListItem', position: 3, name: 'Tech Stack', item: `${SITE_URL}/stack` },
+    { '@type': 'ListItem', position: 4, name: 'Contact', item: `${SITE_URL}/contact` },
   ],
 };
 

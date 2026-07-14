@@ -77,6 +77,8 @@ export const projects = [
   },
 ];
 
+import spriteGenixLogo from '../public/images/spritegenix-logo.jpg';
+
 export const experience = [
   {
     role: "Full Stack Developer (Project-Based)",
@@ -87,7 +89,7 @@ export const experience = [
     desc:
       "Built the blog website 'ThePuranik' with an old manuscript-style aesthetic. Developed the application using Payload CMS, Next.js, TypeScript, and Tailwind CSS. Designed a structured content management system with posts, tags, and media handling. Focused on scalable architecture and modern CMS-based development practices.",
     logo: "SG",
-    logoUrl: "",
+    logoUrl: spriteGenixLogo,
     logoColor: "#1a3a1a",
     domain: "",
   },

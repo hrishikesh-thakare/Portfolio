@@ -41,51 +41,8 @@ const CATEGORIES: Category[] = [
   },
 ];
 
-const SLUGS: Record<string, string> = {
-  "Java": "java",
-  "SQL": "postgresql",
-  "JavaScript": "javascript",
-  "TypeScript": "typescript",
-  "Python": "python",
-  "HTML5": "html5",
-  "CSS3": "css3",
-  "React.js": "react",
-  "Next.js": "nextdotjs",
-  "React Native": "react",
-  "Tailwind CSS": "tailwindcss",
-  "Bootstrap": "bootstrap",
-  "Node.js": "nodedotjs",
-  "Express.js": "express",
-  "Flask": "flask",
-  "Payload CMS": "payloadcms",
-  "REST APIs": "postman",
-  "JWT": "jsonwebtokens",
-  "PostgreSQL": "postgresql",
-  "MongoDB": "mongodb",
-  "Redis": "redis",
-  "Mongoose": "mongoose",
-  "AWS": "amazonaws",
-  "Docker": "docker",
-  "Firebase": "firebase",
-  "Supabase": "supabase",
-  "Vercel": "vercel",
-  "Render": "render",
-  "Git": "git",
-  "GitHub": "github",
-  "Postman": "postman",
-  "Linux": "linux",
-  "TensorFlow": "tensorflow",
-  "Scikit-learn": "scikitlearn",
-};
-
 function SkillTag({ skill }: { skill: string }) {
   const [hovered, setHovered] = useState(false);
-  const slug = SLUGS[skill];
-  const iconUrl = slug
-    ? hovered
-      ? `https://cdn.simpleicons.org/${slug}` // Brand color on hover
-      : `https://cdn.simpleicons.org/${slug}/c8c1c1` // Theme-muted color by default
-    : null;
 
   return (
     <span
@@ -94,7 +51,6 @@ function SkillTag({ skill }: { skill: string }) {
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: 8,
         padding: "7px 14px",
         border: hovered ? "1px solid rgba(255,255,255,.2)" : "1px solid var(--border)",
         borderRadius: 100,
@@ -105,19 +61,6 @@ function SkillTag({ skill }: { skill: string }) {
         background: hovered ? "rgba(255,255,255,0.02)" : "transparent",
       }}
     >
-      {iconUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={iconUrl}
-          alt=""
-          style={{
-            width: 14,
-            height: 14,
-            opacity: hovered ? 1 : 0.8,
-            transition: "opacity .15s ease",
-          }}
-        />
-      )}
       <span style={{ color: hovered ? "var(--text)" : "var(--muted)", transition: "color .2s" }}>
         {skill}
       </span>
@@ -145,9 +88,17 @@ function CategorySection({ cat }: { cat: Category }) {
 
 export default function StackSection() {
   return (
-    <section id="stack" className="pg" style={{ paddingTop: 60, paddingBottom: 100 }}>
+    <section id="stack" className="pg stack-section">
       <style>{`
+        .stack-section {
+          padding-top: 60px;
+          padding-bottom: 100px;
+        }
         @media (max-width: 768px) {
+          .stack-section {
+            padding-top: 50px !important;
+            padding-bottom: 50px !important;
+          }
           .st-cats { grid-template-columns: 1fr !important; gap: 40px !important; }
         }
       `}</style>

@@ -126,7 +126,7 @@ const graphSchema = {
         'Smart India Hackathon 2025 - Selected among top 30 teams for national submission',
         'DMCE HackHive 2.0 Finalist',
       ],
-      mainEntityOfPage: `${SITE_URL}/about`,
+      mainEntityOfPage: SITE_URL,
       sameAs: [
         'https://linkedin.com/in/hrishikesh-thakare',
         'https://github.com/hrishikesh-thakare',
@@ -174,7 +174,6 @@ const graphSchema = {
         ],
       },
       significantLink: [
-        `${SITE_URL}/about`,
         `${SITE_URL}/projects`,
         `${SITE_URL}/stack`,
         `${SITE_URL}/contact`,
@@ -292,24 +291,18 @@ const graphSchema = {
         {
           '@type': 'ListItem',
           position: 2,
-          name: 'About',
-          item: `${SITE_URL}/about`,
-        },
-        {
-          '@type': 'ListItem',
-          position: 3,
           name: 'Projects',
           item: `${SITE_URL}/projects`,
         },
         {
           '@type': 'ListItem',
-          position: 4,
+          position: 3,
           name: 'Tech Stack',
           item: `${SITE_URL}/stack`,
         },
         {
           '@type': 'ListItem',
-          position: 5,
+          position: 4,
           name: 'Contact',
           item: `${SITE_URL}/contact`,
         },

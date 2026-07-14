@@ -18,17 +18,11 @@ const SHORTCUTS: ShortcutGroup[] = [
       { key: "G", desc: "Open GitHub profile" },
       { key: "L", desc: "Open LinkedIn profile" },
       { key: "H", desc: "Go to Home" },
-      { key: "A", desc: "Go to About me" },
       { key: "S", desc: "Go to Stack" },
       { key: "W", desc: "Go to Work" },
     ],
   },
-  {
-    label: "Terminal",
-    items: [
-      { key: "`", desc: "Open / close terminal" },
-    ],
-  },
+
   {
     label: "General",
     items: [
@@ -67,9 +61,6 @@ export default function ShortcutsPanel() {
           break;
         case "H":
           window.location.href = "/";
-          break;
-        case "A":
-          window.location.href = "/about";
           break;
         case "S":
           window.location.href = "/stack";

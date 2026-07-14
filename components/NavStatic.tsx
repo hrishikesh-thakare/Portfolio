@@ -1,27 +1,55 @@
-'use client';
-import Link from 'next/link';
-import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+"use client";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const links = [
-  { href: '/about', label: 'About' },
-  { href: '/#projects', label: 'Projects' },
-  { href: '/#stack', label: 'Stack' },
-  { href: '/#contact', label: 'Contact' },
+  { href: "/#work", label: "Experience" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/#stack", label: "Stack" },
+  { href: "/#contact", label: "Hire Me" },
 ];
 
 export default function NavStatic() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [time, setTime] = useState("");
   const pathname = usePathname();
 
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith('/#')) {
-      const targetId = href.replace('/', ''); // '#projects' or '#contact'
-      if (pathname === '/') {
+  useEffect(() => {
+    const updateTime = () => {
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      };
+      const formatter = new Intl.DateTimeFormat("en-US", options);
+      setTime(formatter.format(new Date()));
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (href.startsWith("/#")) {
+      const targetId = href.replace("/", ""); // '#projects' or '#contact'
+      if (pathname === "/") {
         e.preventDefault();
-        const element = document.querySelector(targetId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+        if (targetId === "#contact") {
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+          });
+        } else {
+          const element = document.querySelector(targetId);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
         }
       }
     }
@@ -31,14 +59,14 @@ export default function NavStatic() {
     <>
       <header
         style={{
-          position: 'relative',
+          position: "relative",
           zIndex: 100,
-          paddingTop: '22px',
-          paddingBottom: '22px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '1px solid var(--border)',
+          paddingTop: "16px",
+          paddingBottom: "16px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          borderBottom: "1px solid var(--border)",
         }}
         className="pg"
       >
@@ -48,23 +76,19 @@ export default function NavStatic() {
           style={{
             fontSize: 17,
             fontWeight: 800,
-            letterSpacing: '-.02em',
-            color: 'var(--text)',
-            textDecoration: 'none',
+            letterSpacing: "-.02em",
+            color: "var(--text)",
+            textDecoration: "none",
           }}
         >
           Hrishikesh
         </Link>
 
         {/* Desktop nav */}
-        <nav className="nav-static__links" style={{ display: 'flex', gap: 32 }}>
+        <nav className="nav-static__links" style={{ display: "flex", gap: 32 }}>
           {links.map((l) => {
             const isActive =
-              l.href === '/'
-                ? pathname === '/'
-                : l.href === '/#work'
-                  ? false
-                  : pathname.startsWith(l.href);
+              l.href === "/" ? pathname === "/" : pathname.startsWith(l.href);
             return (
               <Link
                 key={l.href}
@@ -73,13 +97,15 @@ export default function NavStatic() {
                 className="nav-static__link"
                 style={{
                   fontSize: 12,
-                  letterSpacing: '.08em',
-                  textTransform: 'uppercase',
-                  color: isActive ? 'var(--text)' : 'var(--muted)',
-                  textDecoration: 'none',
-                  transition: 'color .1s ease',
+                  letterSpacing: ".08em",
+                  textTransform: "uppercase",
+                  color: isActive ? "var(--text)" : "var(--muted)",
+                  textDecoration: "none",
+                  transition: "color .1s ease",
                   fontWeight: isActive ? 500 : 300,
-                  borderBottom: isActive ? '1px solid var(--accent)' : '1px solid transparent',
+                  borderBottom: isActive
+                    ? "1px solid var(--accent)"
+                    : "1px solid transparent",
                   paddingBottom: 2,
                 }}
               >
@@ -89,90 +115,53 @@ export default function NavStatic() {
           })}
         </nav>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          {/* Terminal trigger - hidden on small screens */}
-          <button
-            className="nav-static__links"
-            onClick={() =>
-              window.dispatchEvent(new CustomEvent('open-terminal'))
-            }
-            title="Open terminal"
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {/* Mumbai Time & Location */}
+          <div
+            className="nav-static__time"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 7,
-              background: 'none',
-              border: '1px solid var(--border)',
-              borderRadius: 6,
-              padding: '5px 10px',
-              color: 'var(--muted)',
-              cursor: 'pointer',
-              fontSize: 11,
-              letterSpacing: '.05em',
-              transition: 'border-color .1s, color .2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)';
-              e.currentTarget.style.color = 'var(--text)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'var(--border)';
-              e.currentTarget.style.color = 'var(--muted)';
+              fontSize: 10,
+              letterSpacing: ".08em",
+              textTransform: "uppercase",
+              color: "var(--muted)",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "6px 0",
             }}
           >
-            {/* ⌘ icon */}
-            <svg
-              width="13"
-              height="13"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
-            </svg>
-            <span>` Terminal</span>
-          </button>
-
-          <Link
-            href="/#contact"
-            onClick={(e) => handleScroll(e, '/#contact')}
-            className="nav-static__cta"
-            style={{
-              fontSize: 12,
-              letterSpacing: '.08em',
-              textTransform: 'uppercase',
-              color: 'var(--accent)',
-              textDecoration: 'none',
-              border: '1px solid rgba(34,197,94,.3)',
-              padding: '8px 18px',
-              borderRadius: 100,
-              transition: 'background .12s',
-            }}
-          >
-            Hire Me
-          </Link>
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                background: "var(--accent)",
+                flexShrink: 0,
+                boxShadow: "0 0 8px var(--accent)",
+                animation: "pulse 2s infinite",
+              }}
+            />
+            <span>Mumbai, India - {time || "--:--"}</span>
+          </div>
 
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Toggle menu"
             style={{
-              display: 'none',
-              background: 'none',
-              border: '1px solid var(--border)',
+              display: "none",
+              background: "none",
+              border: "1px solid var(--border)",
               borderRadius: 6,
-              padding: '6px 10px',
-              color: 'var(--muted)',
-              cursor: 'pointer',
+              padding: "6px 10px",
+              color: "var(--muted)",
+              cursor: "pointer",
               fontSize: 16,
               lineHeight: 1,
             }}
             className="nav-hamburger"
           >
-            {mobileOpen ? '✕' : '☰'}
+            {mobileOpen ? "✕" : "☰"}
           </button>
         </div>
       </header>
@@ -181,18 +170,19 @@ export default function NavStatic() {
       {mobileOpen && (
         <nav
           style={{
-            position: 'relative',
+            position: "relative",
             zIndex: 99,
-            background: 'var(--surface)',
-            borderBottom: '1px solid var(--border)',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '16px 20px',
+            background: "var(--surface)",
+            borderBottom: "1px solid var(--border)",
+            display: "flex",
+            flexDirection: "column",
+            padding: "16px 20px",
             gap: 4,
           }}
         >
           {links.map((l) => {
-            const isActive = l.href === '/' ? pathname === '/' : pathname.startsWith(l.href);
+            const isActive =
+              l.href === "/" ? pathname === "/" : pathname.startsWith(l.href);
             return (
               <Link
                 key={l.href}
@@ -203,13 +193,13 @@ export default function NavStatic() {
                 }}
                 style={{
                   fontSize: 13,
-                  letterSpacing: '.08em',
-                  textTransform: 'uppercase',
-                  color: isActive ? 'var(--accent)' : 'var(--muted)',
-                  textDecoration: 'none',
-                  padding: '12px 0',
-                  borderBottom: '1px solid var(--border)',
-                  transition: 'color .2s',
+                  letterSpacing: ".08em",
+                  textTransform: "uppercase",
+                  color: isActive ? "var(--accent)" : "var(--muted)",
+                  textDecoration: "none",
+                  padding: "12px 0",
+                  borderBottom: "1px solid var(--border)",
+                  transition: "color .2s",
                   fontWeight: isActive ? 500 : 300,
                 }}
               >
@@ -217,48 +207,21 @@ export default function NavStatic() {
               </Link>
             );
           })}
-          <button
-            onClick={() => {
-              setMobileOpen(false);
-              window.dispatchEvent(new CustomEvent('open-terminal'));
-            }}
-            style={{
-              marginTop: 8,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 7,
-              background: 'none',
-              border: '1px solid var(--border)',
-              borderRadius: 6,
-              padding: '8px 12px',
-              width: '100%',
-              color: 'var(--muted)',
-              cursor: 'pointer',
-              fontSize: 11,
-              letterSpacing: '.06em',
-            }}
-          >
-            <svg
-              width="13"
-              height="13"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
-            </svg>
-            ` Terminal
-          </button>
         </nav>
       )}
 
       <style>{`
+        @keyframes pulse {
+          0% { transform: scale(0.95); opacity: 0.8; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+          70% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+          100% { transform: scale(0.95); opacity: 0.8; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
         @media (max-width: 768px) {
           .nav-static__links { display: none !important; }
           .nav-hamburger { display: block !important; }
+        }
+        @media (max-width: 540px) {
+          .nav-static__time { display: none !important; }
         }
         @media (max-width: 480px) {
           .nav-static__cta { padding: 6px 12px !important; font-size: 10px !important; letter-spacing: .06em !important; }

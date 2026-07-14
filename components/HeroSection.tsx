@@ -3,7 +3,7 @@ import { useEffect, useRef, useSyncExternalStore } from 'react';
 import gsap from 'gsap';
 import { socials, personal } from '@/lib/data';
 import dynamic from 'next/dynamic';
-const IsometricCubes = dynamic(() => import('./IsometricCubes'), { ssr: false });
+const ParticleConstellation = dynamic(() => import('./ParticleConstellation'), { ssr: false });
 import PointerHighlight from './PointerHighlight';
 
 const icons: Record<string, string> = {
@@ -32,7 +32,8 @@ export default function HeroSection() {
   );
 
   const name = ['H', 'R', 'I', 'S', 'H', 'I', 'K', 'E', 'S', 'H'];
-  const sub = ['Building', 'scalable', 'solutions', 'that', 'matter.'];
+  const subLine1 = ["I", "don't", "stop", "when", "it", "works."];
+  const subLine2 = ["I", "stop", "when", "it", "works", "perfectly."];
 
   useEffect(() => {
     const chars = charRefs.current.filter(Boolean) as HTMLSpanElement[];
@@ -61,10 +62,10 @@ export default function HeroSection() {
     <section
       style={{
         position: 'relative',
-        minHeight: 'calc(100svh - 73px)',
+        minHeight: 'calc(100svh - 61px)',
         display: 'flex',
         flexDirection: 'column',
-        padding: '48px 52px 52px',
+        padding: '16px 52px 52px',
         overflow: 'hidden',
       }}
     >
@@ -87,29 +88,9 @@ export default function HeroSection() {
         }
       `}</style>
 
-      {mounted && <IsometricCubes />}
+      {mounted && <ParticleConstellation />}
 
-      {/* Top bar */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'end',
-          alignItems: 'center',
-          position: 'relative',
-          zIndex: 2,
-        }}
-      >
-        <span
-          style={{
-            fontSize: 11,
-            letterSpacing: '.08em',
-            textTransform: 'uppercase',
-            color: 'var(--muted)',
-          }}
-        >
-          {personal.location}
-        </span>
-      </div>
+
 
       {/* Main name block */}
       <div
@@ -120,7 +101,7 @@ export default function HeroSection() {
           justifyContent: 'center',
           position: 'relative',
           zIndex: 2,
-          paddingTop: 32,
+          paddingTop: 0,
         }}
       >
         <div style={{ overflow: 'hidden', marginBottom: 24 }}>
@@ -142,10 +123,11 @@ export default function HeroSection() {
         <div
           className="font-display"
           style={{
-            fontSize: 'clamp(72px,13vw,185px)',
+            fontSize: 'clamp(42px,13vw,185px)',
             fontWeight: 700,
             lineHeight: 0.88,
             letterSpacing: '-.045em',
+            marginLeft: '-0.04em',
             userSelect: 'none',
           }}
           aria-label="HRISHIKESH"
@@ -184,24 +166,47 @@ export default function HeroSection() {
             letterSpacing: '-.02em',
             color: 'var(--muted)',
             marginTop: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            lineHeight: 1.2,
           }}
         >
-          {sub.map((w, i) => (
-            <span
-              key={i}
-              style={{ display: 'inline-block', overflow: 'hidden' }}
-            >
+          <div>
+            {subLine1.map((w, i) => (
               <span
-                ref={(el) => {
-                  subRefs.current[i] = el;
-                }}
-                style={{ display: 'inline-block' }}
+                key={i}
+                style={{ display: 'inline-block', overflow: 'hidden' }}
               >
-                {w}
-                {i < sub.length - 1 ? ' ' : ''}
+                <span
+                  ref={(el) => {
+                    subRefs.current[i] = el;
+                  }}
+                  style={{ display: 'inline-block' }}
+                >
+                  {w}
+                  {i < subLine1.length - 1 ? ' ' : ''}
+                </span>
               </span>
-            </span>
-          ))}
+            ))}
+          </div>
+          <div style={{ marginTop: -6 }}>
+            {subLine2.map((w, i) => (
+              <span
+                key={i}
+                style={{ display: 'inline-block', overflow: 'hidden' }}
+              >
+                <span
+                  ref={(el) => {
+                    subRefs.current[subLine1.length + i] = el;
+                  }}
+                  style={{ display: 'inline-block' }}
+                >
+                  {w}
+                  {i < subLine2.length - 1 ? ' ' : ''}
+                </span>
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 

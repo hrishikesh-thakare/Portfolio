@@ -1,9 +1,7 @@
 'use client';
-import { useEffect, useRef, useSyncExternalStore } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { socials } from '@/lib/data';
-import dynamic from 'next/dynamic';
-const ParticleConstellation = dynamic(() => import('./ParticleConstellation'), { ssr: false });
 import PointerHighlight from './PointerHighlight';
 
 const icons: Record<string, string> = {
@@ -25,11 +23,7 @@ export default function HeroSection() {
   const subRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
   const cueRef = useRef<HTMLDivElement>(null);
-  const mounted = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false,
-  );
+
 
   const name = ['H', 'R', 'I', 'S', 'H', 'I', 'K', 'E', 'S', 'H'];
   const subLine1 = ["I", "don't", "stop", "when", "it", "works."];
@@ -97,10 +91,6 @@ export default function HeroSection() {
           60% { transform: translateY(-3px); }
         }
       `}</style>
-
-      {mounted && <ParticleConstellation />}
-
-
 
       {/* Main name block */}
       <div

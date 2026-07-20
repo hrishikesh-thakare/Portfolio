@@ -1,6 +1,6 @@
 export const SITE_URL = "https://hrishikeshthakare.dev";
-export const CV_VIEW_URL = "#";
-export const CV_DOWNLOAD_URL = "#";
+export const CV_VIEW_URL = "https://drive.google.com/file/d/1x4rHSJsXmmza-mwbG5-HuTrrpVS3AmM7/view?usp=sharing";
+export const CV_DOWNLOAD_URL = "https://drive.google.com/file/d/1x4rHSJsXmmza-mwbG5-HuTrrpVS3AmM7/view?usp=sharing";
 
 export const personal = {
   name: "Hrishikesh Thakare",

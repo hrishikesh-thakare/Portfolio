@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { CV_VIEW_URL, CV_DOWNLOAD_URL } from '@/lib/data';
+import { CV_VIEW_URL } from '@/lib/data';
 
 type FormState = 'idle' | 'sending' | 'sent' | 'error';
 
@@ -205,7 +205,7 @@ export default function ContactSection() {
             </span>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a
-                href={CV_DOWNLOAD_URL}
+                href={CV_VIEW_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -219,27 +219,7 @@ export default function ContactSection() {
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = '.85')}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
               >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Download CV
-              </a>
-              <a
-                href={CV_VIEW_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 6,
-                  padding: '10px 18px', borderRadius: 100,
-                  border: '1px solid var(--border)', color: 'var(--muted)',
-                  fontSize: 11, letterSpacing: '.08em',
-                  textTransform: 'uppercase', textDecoration: 'none',
-                  transition: 'border-color .15s, color .15s',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)'; e.currentTarget.style.color = 'var(--text)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)'; }}
-              >
-                View PDF ↗
+                View Resume ↗
               </a>
             </div>
           </div>
@@ -563,7 +543,7 @@ export default function ContactSection() {
                         : 'var(--accent)',
                     color: '#000',
                     fontSize: 12,
-                    fontWeight: 500,
+                    fontWeight: 600,
                     letterSpacing: '.07em',
                     textTransform: 'uppercase',
                     border: 'none',

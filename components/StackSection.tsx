@@ -12,32 +12,27 @@ const CATEGORIES: Category[] = [
   {
     label: "Languages",
     icon: "◈",
-    skills: ["Java", "SQL", "JavaScript", "TypeScript", "Python", "HTML5", "CSS3"],
+    skills: ["Java", "SQL", "JavaScript", "TypeScript"],
   },
   {
     label: "Frontend",
     icon: "▣",
-    skills: ["React.js", "Next.js", "React Native", "Tailwind CSS", "Bootstrap"],
+    skills: ["React.js", "React Native", "Next.js", "Tailwind CSS"],
   },
   {
     label: "Backend",
     icon: "◉",
-    skills: ["Node.js", "Express.js", "Flask", "Payload CMS", "REST APIs", "JWT"],
+    skills: ["Node.js", "Express.js", "Flask", "Payload CMS", "REST APIs"],
   },
   {
     label: "Databases",
     icon: "▦",
-    skills: ["PostgreSQL", "MongoDB", "Redis", "Mongoose"],
+    skills: ["PostgreSQL", "MongoDB"],
   },
   {
     label: "Cloud & Tools",
     icon: "◬",
-    skills: ["AWS", "Docker", "Firebase", "Supabase", "Vercel", "Render", "Git", "GitHub", "Postman", "Linux"],
-  },
-  {
-    label: "Machine Learning",
-    icon: "◎",
-    skills: ["TensorFlow", "Scikit-learn"],
+    skills: ["Firebase", "Supabase", "Vercel", "Render", "Git", "GitHub", "Postman", "Linux"],
   },
 ];
 

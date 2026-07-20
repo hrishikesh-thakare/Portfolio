@@ -76,7 +76,7 @@ export default function ParticleConstellation() {
           const dy = nodes[i].y - nodes[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < CONNECTION_DIST) {
-            const alpha = (1 - dist / CONNECTION_DIST) * 0.35;
+            const alpha = (1 - dist / CONNECTION_DIST) * 0.65;
             ctx!.strokeStyle = `rgba(34, 197, 94, ${alpha})`;
             ctx!.lineWidth = 0.7;
             ctx!.beginPath();
@@ -112,7 +112,7 @@ export default function ParticleConstellation() {
         const proximity = nearMouse ? 1 - dist / MOUSE_GRAB_DIST : 0;
 
         const r = nearMouse ? node.radius * (1 + proximity * 0.4) : node.radius;
-        const alpha = nearMouse ? 0.5 + proximity * 0.5 : 0.4;
+        const alpha = nearMouse ? 0.8 + proximity * 0.2 : 0.65;
 
         ctx!.fillStyle = `rgba(34, 197, 94, ${alpha})`;
         ctx!.beginPath();
@@ -152,13 +152,13 @@ export default function ParticleConstellation() {
       <style>{`
         @media (max-width: 768px) {
           .particle-canvas {
-            opacity: 0.35 !important;
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 70%) !important;
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 70%) !important;
+            opacity: 0.5 !important;
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 90%) !important;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 90%) !important;
           }
         }
         @media (min-width: 769px) and (max-width: 1024px) {
-          .particle-canvas { opacity: 0.4 !important; }
+          .particle-canvas { opacity: 0.6 !important; }
         }
       `}</style>
       <canvas

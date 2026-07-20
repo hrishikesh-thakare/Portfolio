@@ -1,5 +1,6 @@
-export const CV_VIEW_URL = '#';
-export const CV_DOWNLOAD_URL = '#';
+export const SITE_URL = "https://hrishikeshthakare.dev";
+export const CV_VIEW_URL = "#";
+export const CV_DOWNLOAD_URL = "#";
 
 export const personal = {
   name: "Hrishikesh Thakare",
@@ -22,7 +23,7 @@ export const projects = [
     tags: ["React Native", "Expo", "Payload CMS", "PostgreSQL", "TypeScript"],
     year: "2026",
     slug: "fitledger",
-    image: "",
+    images: ["/images/projects/fitledger/preview1.jpg", "/images/projects/fitledger/preview2.jpg"],
     href: "https://github.com/hrishikesh-thakare/FitLedger",
     featured: true,
     company: "Personal Project",
@@ -37,7 +38,10 @@ export const projects = [
     tags: ["React Native", "Firebase", "Google Document AI", "Gemini API"],
     year: "2026",
     slug: "smart-product-warranty-tracker",
-    image: "",
+    images: [
+      "/images/projects/smart-product-warranty-tracker/preview1.png",
+      "/images/projects/smart-product-warranty-tracker/preview2.png"
+    ],
     href: "https://github.com/hrishikesh-thakare/Smart-Product-Warranty-Tracker",
     featured: true,
     company: "Hackathon Project",
@@ -52,7 +56,10 @@ export const projects = [
     tags: ["React.js", "Flask", "NLTK", "Scikit-learn", "Googletrans API"],
     year: "2025",
     slug: "multilingual-text-summarizer",
-    image: "",
+    images: [
+      "/images/projects/multilingual-text-summarizer/preview1.png",
+      "/images/projects/multilingual-text-summarizer/preview2.png"
+    ],
     href: "https://github.com/hrishikesh-thakare/Multilingual-Text-Summarizer",
     featured: true,
     company: "Academic Project",
@@ -67,7 +74,10 @@ export const projects = [
     tags: ["Payload CMS", "Next.js", "TypeScript", "Tailwind CSS"],
     year: "2026",
     slug: "thepuranik",
-    image: "",
+    images: [
+      "/images/projects/thepuranik/preview1.png",
+      "/images/projects/thepuranik/preview2.png"
+    ],
     href: "https://github.com/hrishikesh-thakare/ThePuranik",
     featured: true,
     company: "SpriteGenix",
@@ -77,7 +87,7 @@ export const projects = [
   },
 ];
 
-import spriteGenixLogo from '../public/images/spritegenix-logo.jpg';
+import spriteGenixLogo from "../public/images/spritegenix-logo.jpg";
 
 export const experience = [
   {
@@ -86,8 +96,7 @@ export const experience = [
     location: "Remote",
     period: "Dec 2025 – Mar 2026",
     stack: ["Payload CMS", "Next.js", "TypeScript", "Tailwind CSS"],
-    desc:
-      "Built the blog website 'ThePuranik' with an old manuscript-style aesthetic. Developed the application using Payload CMS, Next.js, TypeScript, and Tailwind CSS. Designed a structured content management system with posts, tags, and media handling. Focused on scalable architecture and modern CMS-based development practices.",
+    desc: "Built ThePuranik, a manuscript-themed blog platform using Next.js, TypeScript, Tailwind CSS, and Payload CMS. Configured Payload CMS collections, media management, and the admin interface, enabling seamless content creation and publishing. Implemented authentication and role-based access control to secure content management and administrative features.",
     logo: "SG",
     logoUrl: spriteGenixLogo,
     logoColor: "#1a3a1a",
@@ -101,16 +110,12 @@ export const skills = [
   "SQL",
   "JavaScript",
   "TypeScript",
-  "Python",
-  "HTML5",
-  "CSS3",
 
   // Frontend
   "React.js",
   "React Native",
   "Next.js",
   "Tailwind CSS",
-  "Bootstrap",
 
   // Backend
   "Node.js",
@@ -118,17 +123,12 @@ export const skills = [
   "Flask",
   "Payload CMS",
   "REST APIs",
-  "JWT",
 
   // Databases
   "PostgreSQL",
   "MongoDB",
-  "Redis",
-  "Mongoose",
 
   // Cloud & Tools
-  "AWS",
-  "Docker",
   "Firebase",
   "Supabase",
   "Vercel",
@@ -137,16 +137,19 @@ export const skills = [
   "GitHub",
   "Postman",
   "Linux",
-
-  // ML
-  "TensorFlow",
-  "Scikit-learn",
 ];
 
 export const socials = [
-  { label: "GitHub", href: "https://github.com/hrishikesh-thakare", icon: "github" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/hrishikesh-thakare", icon: "linkedin" },
+  {
+    label: "GitHub",
+    href: "https://github.com/hrishikesh-thakare",
+    icon: "github",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/hrishikesh-thakare",
+    icon: "linkedin",
+  },
 ];
-
 
 export const GITHUB_USERNAME = "hrishikesh-thakare";

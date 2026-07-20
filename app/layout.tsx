@@ -4,7 +4,8 @@ import localFont from 'next/font/local';
 import './globals.css';
 import NavStatic from '@/components/NavStatic';
 import GlobalShell from '@/components/GlobalShell';
-import JsonLd from '@/components/JsonLd';
+import { SITE_URL } from '@/lib/data';
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,7 +24,7 @@ const clashDisplay = localFont({
   display: 'swap',
 });
 
-const SITE_URL = 'https://hrishikeshthakare.dev';
+
 const FULL_NAME = 'Hrishikesh Thakare';
 const TITLE = 'Hrishikesh Thakare - Full Stack Developer, Mumbai';
 const DESCRIPTION =
@@ -93,14 +94,7 @@ export const metadata: Metadata = {
     creator: '@hrishikeshthakare',
     images: [`${SITE_URL}/og-image.JPG`],
   },
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.ico', type: 'image/x-icon' },
-    ],
-    shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
-  },
+
   manifest: '/site.webmanifest',
   verification: {
     google: '',
@@ -114,17 +108,7 @@ export const metadata: Metadata = {
   },
 };
 
-const siteNavigationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ItemList',
-  name: 'Site Navigation',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-    { '@type': 'ListItem', position: 2, name: 'Projects', item: `${SITE_URL}/projects` },
-    { '@type': 'ListItem', position: 3, name: 'Tech Stack', item: `${SITE_URL}/stack` },
-    { '@type': 'ListItem', position: 4, name: 'Contact', item: `${SITE_URL}/contact` },
-  ],
-};
+
 
 export default function RootLayout({
   children,
@@ -134,12 +118,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${clashDisplay.variable}`}>
       <head>
-        <link
-          rel="preconnect"
-          href="https://api.fontshare.com"
-          crossOrigin="anonymous"
-        />
-        <link rel="canonical" href={SITE_URL} />
         <meta name="geo.region" content="IN-MH" />
         <meta name="geo.placename" content="Mumbai, India" />
         <meta name="language" content="English" />
@@ -150,7 +128,6 @@ export default function RootLayout({
         <link rel="me" href="https://linkedin.com/in/hrishikesh-thakare" />
       </head>
       <body className="antialiased" suppressHydrationWarning>
-        <JsonLd data={siteNavigationSchema} />
         <NavStatic />
         {children}
         <GlobalShell />

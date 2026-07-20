@@ -9,12 +9,11 @@ import MarqueeSection from '@/components/MarqueeSection';
 import ExperienceOverviewSection from '@/components/ExperienceOverviewSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import StackSection from '@/components/StackSection';
-// import ServicesSection from '@/components/ServicesSection';
 import ContactSection from '@/components/ContactSection';
 import FooterSection from '@/components/FooterSection';
 import JsonLd from '@/components/JsonLd';
+import { SITE_URL } from '@/lib/data';
 
-const SITE_URL = 'https://hrishikeshthakare.dev';
 
 const graphSchema = {
   '@context': 'https://schema.org',

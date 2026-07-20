@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useSyncExternalStore } from 'react';
 import gsap from 'gsap';
-import { socials, personal } from '@/lib/data';
+import { socials } from '@/lib/data';
 import dynamic from 'next/dynamic';
 const ParticleConstellation = dynamic(() => import('./ParticleConstellation'), { ssr: false });
 import PointerHighlight from './PointerHighlight';
@@ -65,6 +65,8 @@ export default function HeroSection() {
         minHeight: 'calc(100svh - 61px)',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'center',
+        gap: 40,
         padding: '16px 52px 52px',
         overflow: 'hidden',
       }}
@@ -74,17 +76,25 @@ export default function HeroSection() {
           .hero-section { padding-left: 32px !important; padding-right: 32px !important; }
         }
         @media (max-width: 640px) {
-          .hero-section { padding: 32px 20px 40px !important; }
+          .hero-section { padding: 32px 20px 80px !important; }
           .hero-bottom  { grid-template-columns: 1fr !important; padding-top: 32px !important; }
-          .hero-scroll-cue { display: none !important; }
           .hero-right   { align-items: flex-start !important; }
           .hero-cta-row { flex-wrap: wrap !important; }
+          .hero-scroll-cue { display: none !important; }
         }
         @media (min-width: 641px) and (max-width: 900px) {
           .hero-bottom  { grid-template-columns: 1fr 1fr !important; }
-          .hero-scroll-cue { display: none !important; }
           .hero-right   { grid-column: 1 / -1 !important; flex-direction: row !important;
                           align-items: center !important; justify-content: space-between !important; }
+          .hero-scroll-cue { display: none !important; }
+        }
+        @media (max-width: 900px) {
+          .mobile-swipe-indicator { display: flex !important; }
+        }
+        @keyframes swipe-bounce {
+          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+          40% { transform: translateY(-6px); }
+          60% { transform: translateY(-3px); }
         }
       `}</style>
 
@@ -95,10 +105,8 @@ export default function HeroSection() {
       {/* Main name block */}
       <div
         style={{
-          flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
           position: 'relative',
           zIndex: 2,
           paddingTop: 0,
@@ -221,17 +229,17 @@ export default function HeroSection() {
           gridTemplateColumns: '1fr auto 1fr',
           gap: 24,
           alignItems: 'flex-end',
-          paddingTop: 48,
+          paddingTop: 0,
         }}
       >
         {/* Left: bio + socials */}
         <div>
           <p
             style={{
-              fontSize: 14,
-              lineHeight: 2.1,
+              fontSize: 18,
+              lineHeight: 1.8,
               color: 'var(--muted)',
-              maxWidth: 340,
+              maxWidth: 480,
             }}
           >
             Full Stack Developer based in{' '}
@@ -252,8 +260,8 @@ export default function HeroSection() {
             style={{
               display: 'flex',
               flexWrap: 'wrap',
-              gap: '8px 18px',
-              marginTop: 20,
+              gap: '16px 28px',
+              marginTop: 28,
             }}
           >
             {socials.map((s) => (
@@ -265,8 +273,8 @@ export default function HeroSection() {
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 6,
-                  fontSize: 12,
+                  gap: 10,
+                  fontSize: 18,
                   letterSpacing: '.04em',
                   color: 'var(--muted)',
                   textDecoration: 'none',
@@ -280,8 +288,8 @@ export default function HeroSection() {
                 }
               >
                 <svg
-                  width="12"
-                  height="12"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   style={{ flexShrink: 0 }}
@@ -292,17 +300,6 @@ export default function HeroSection() {
               </a>
             ))}
           </div>
-          <p
-            style={{
-              fontSize: 11,
-              letterSpacing: '.1em',
-              textTransform: 'uppercase',
-              color: 'var(--muted)',
-              marginTop: 20,
-            }}
-          >
-            {personal.title}
-          </p>
         </div>
 
         {/* Center: scroll cue */}
@@ -365,6 +362,50 @@ export default function HeroSection() {
           </div>
           <span style={{ fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>© 2026</span>
         </div> */}
+      </div>
+
+      {/* Mobile-Only Swipe Indicator */}
+      <div
+        className="mobile-swipe-indicator"
+        style={{
+          display: 'none',
+          position: 'absolute',
+          bottom: 20,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 6,
+          zIndex: 10,
+          pointerEvents: 'none',
+        }}
+      >
+        <span
+          style={{
+            fontSize: 10,
+            fontWeight: 500,
+            letterSpacing: '0.28em',
+            textTransform: 'uppercase',
+            color: 'var(--accent)',
+          }}
+        >
+          Swipe
+        </span>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="var(--accent)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{
+            animation: 'swipe-bounce 2s infinite',
+          }}
+        >
+          <path d="M12 5v14M19 12l-7 7-7-7" />
+        </svg>
       </div>
     </section>
   );

@@ -1,9 +1,46 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function ProjectItem({ project }: { project: any }) {
-  const [imgLoaded, setImgLoaded] = useState(false);
-  const imgSrc = project.image || null;
+interface Project {
+  num: string;
+  title: string;
+  desc: string;
+  motivation?: string;
+  tags: string[];
+  year: string;
+  slug: string;
+  images: string[];
+  href?: string;
+  featured: boolean;
+  company: string;
+  logo: string;
+  logoUrl?: string;
+  logoColor?: string;
+}
+
+export default function ProjectItem({ project }: { project: Project }) {
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImgIndex((prev) => (prev === 0 ? project.images.length - 1 : prev - 1));
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImgIndex((prev) => (prev === project.images.length - 1 ? 0 : prev + 1));
+  };
+
+  useEffect(() => {
+    if (!project.images || project.images.length <= 1 || isHovered) return;
+    
+    const interval = setInterval(() => {
+      setCurrentImgIndex((prev) => (prev === project.images.length - 1 ? 0 : prev + 1));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [project.images, isHovered]);
 
   return (
     <div className="project-layout" style={{ borderBottom: '1px solid var(--border)' }}>
@@ -87,21 +124,160 @@ export default function ProjectItem({ project }: { project: any }) {
       </div>
       
       {/* Right Column - Preview */}
-      <div className="preview-column">
-        {imgSrc ? (
+      <div
+        className="preview-column"
+        style={{ position: 'relative', background: '#0a0a0a', overflow: 'hidden' }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {project.images && project.images.length > 0 ? (
           <>
-            {!imgLoaded && (
-              <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div style={{ width: 24, height: 24, border: "2px solid var(--border)", borderTopColor: "var(--accent)", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
-              </div>
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                height: '100%',
+                transform: `translateX(-${currentImgIndex * 100}%)`,
+                transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
+              }}
+            >
+              {project.images.map((src, idx) => (
+                <div
+                  key={src}
+                  style={{
+                    minWidth: '100%',
+                    height: '100%',
+                    position: 'relative'
+                  }}
+                >
+                  <img
+                    src={src}
+                    alt={`${project.title} Preview ${idx + 1}`}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+            {project.images.length > 1 && (
+              <>
+                {currentImgIndex > 0 && (
+                  <button
+                    onClick={handlePrev}
+                    aria-label="Previous image"
+                    style={{
+                      position: 'absolute',
+                      left: 16,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'rgba(0, 0, 0, 0.4)',
+                      border: '1px solid var(--border)',
+                      borderRadius: '50%',
+                      width: 38,
+                      height: 38,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'var(--muted)',
+                      cursor: 'pointer',
+                      transition: 'background 0.2s, color 0.2s, opacity 0.2s, border-color 0.2s',
+                      opacity: isHovered ? 1 : 0,
+                      zIndex: 3
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.85)';
+                      e.currentTarget.style.color = 'var(--text)';
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.4)';
+                      e.currentTarget.style.color = 'var(--muted)';
+                      e.currentTarget.style.borderColor = 'var(--border)';
+                    }}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+                  </button>
+                )}
+                {currentImgIndex < project.images.length - 1 && (
+                  <button
+                    onClick={handleNext}
+                    aria-label="Next image"
+                    style={{
+                      position: 'absolute',
+                      right: 16,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'rgba(0, 0, 0, 0.4)',
+                      border: '1px solid var(--border)',
+                      borderRadius: '50%',
+                      width: 38,
+                      height: 38,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'var(--muted)',
+                      cursor: 'pointer',
+                      transition: 'background 0.2s, color 0.2s, opacity 0.2s, border-color 0.2s',
+                      opacity: isHovered ? 1 : 0,
+                      zIndex: 3
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.85)';
+                      e.currentTarget.style.color = 'var(--text)';
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.4)';
+                      e.currentTarget.style.color = 'var(--muted)';
+                      e.currentTarget.style.borderColor = 'var(--border)';
+                    }}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
+                  </button>
+                )}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: 16,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    gap: 8,
+                    zIndex: 3,
+                    background: 'rgba(0, 0, 0, 0.4)',
+                    padding: '8px 14px',
+                    borderRadius: '100px',
+                    border: '1px solid var(--border)'
+                  }}
+                >
+                  {project.images.map((_: string, idx: number) => (
+                    <button
+                      key={idx}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentImgIndex(idx);
+                      }}
+                      aria-label={`Go to image ${idx + 1}`}
+                      style={{
+                        padding: 0,
+                        border: 'none',
+                        cursor: 'pointer',
+                        width: 6,
+                        height: 6,
+                        borderRadius: '50%',
+                        background: idx === currentImgIndex ? 'var(--accent)' : 'var(--muted)',
+                        transition: 'background 0.3s, transform 0.3s',
+                        transform: idx === currentImgIndex ? 'scale(1.2)' : 'scale(1)',
+                      }}
+                    />
+                  ))}
+                </div>
+              </>
             )}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={imgSrc}
-              alt={`${project.title} Preview`}
-              onLoad={() => setImgLoaded(true)}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', opacity: imgLoaded ? 1 : 0, transition: "opacity 0.3s ease" }}
-            />
           </>
         ) : (
           <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: 'var(--muted)', fontSize: 12, letterSpacing: '.05em', textTransform: 'uppercase' }}>
@@ -111,8 +287,7 @@ export default function ProjectItem({ project }: { project: any }) {
       </div>
 
       <style>{`
-        @keyframes spin { to { transform: rotate(360deg); } }
-        
+
         .project-layout {
           display: flex;
           flex-direction: column;
@@ -138,7 +313,7 @@ export default function ProjectItem({ project }: { project: any }) {
         
         .preview-column {
           width: 100%;
-          aspect-ratio: 16/9;
+          aspect-ratio: 4/3;
           background: #0a0a0a;
           position: relative;
           overflow: hidden;
@@ -156,12 +331,13 @@ export default function ProjectItem({ project }: { project: any }) {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding-top: 60px;
-            padding-bottom: 60px;
+            padding-top: 32px;
+            padding-bottom: 32px;
           }
 
           .preview-column {
             width: 50%;
+            aspect-ratio: 4/3;
             border-top: none;
             border-left: 1px solid var(--border);
           }

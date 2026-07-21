@@ -161,5 +161,7 @@ body {
   .nav-static__logo {
     font-size: 14px !important;
   }
+  .hide-on-mobile {
+    display: none !important;
+  }
 }
-

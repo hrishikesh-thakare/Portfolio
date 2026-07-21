@@ -24,6 +24,9 @@ export default function ProjectItem({ project }: { project: Project }) {
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
+  
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
 
   useEffect(() => {
     if (sliderRef.current) {
@@ -45,6 +48,30 @@ export default function ProjectItem({ project }: { project: Project }) {
     setCurrentImgIndex((prev) => (prev === project.images.length - 1 ? 0 : prev + 1));
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    
+    const diff = touchStartX.current - touchEndX.current;
+    const swipeThreshold = 50;
+
+    if (diff > swipeThreshold) {
+      setCurrentImgIndex((prev) => (prev === project.images.length - 1 ? 0 : prev + 1));
+    } else if (diff < -swipeThreshold) {
+      setCurrentImgIndex((prev) => (prev === 0 ? project.images.length - 1 : prev - 1));
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
   useEffect(() => {
     if (!project.images || project.images.length <= 1 || isHovered) return;
     
@@ -53,7 +80,7 @@ export default function ProjectItem({ project }: { project: Project }) {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [project.images, isHovered]);
+  }, [project.images, isHovered, currentImgIndex]);
 
   return (
     <div className="project-layout" style={{ borderBottom: '1px solid var(--border)' }}>
@@ -139,9 +166,12 @@ export default function ProjectItem({ project }: { project: Project }) {
       {/* Right Column - Preview */}
       <div
         className="preview-column"
-        style={{ position: 'relative', background: '#0a0a0a', overflow: 'hidden' }}
+        style={{ position: 'relative', background: '#0a0a0a', overflow: 'hidden', touchAction: 'pan-y' }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {project.images && project.images.length > 0 ? (
           <>
@@ -179,6 +209,7 @@ export default function ProjectItem({ project }: { project: Project }) {
               <>
                 {currentImgIndex > 0 && (
                   <button
+                    className="hide-on-mobile"
                     onClick={handlePrev}
                     aria-label="Previous image"
                     style={{
@@ -216,6 +247,7 @@ export default function ProjectItem({ project }: { project: Project }) {
                 )}
                 {currentImgIndex < project.images.length - 1 && (
                   <button
+                    className="hide-on-mobile"
                     onClick={handleNext}
                     aria-label="Next image"
                     style={{

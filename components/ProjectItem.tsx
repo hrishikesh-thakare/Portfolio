@@ -33,7 +33,9 @@ export default function ProjectItem({ project }: { project: Project }) {
       gsap.to(sliderRef.current, {
         xPercent: -currentImgIndex * 100,
         duration: 0.6,
-        ease: 'power3.inOut'
+        ease: 'power3.inOut',
+        force3D: true,
+        overwrite: 'auto'
       });
     }
   }, [currentImgIndex]);
@@ -181,6 +183,7 @@ export default function ProjectItem({ project }: { project: Project }) {
                 display: 'flex',
                 width: '100%',
                 height: '100%',
+                willChange: 'transform',
               }}
             >
               {project.images.map((src, idx) => (

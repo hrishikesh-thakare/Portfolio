@@ -133,6 +133,7 @@ export default function HeroSection() {
               letterSpacing: '.25em',
               textTransform: 'uppercase',
               color: 'var(--muted)',
+              transform: 'translateY(110%)',
             }}
           >
             Full Stack Developer
@@ -163,6 +164,7 @@ export default function HeroSection() {
                 }}
                 style={{
                   display: 'inline-block',
+                  transform: 'translateY(112%)',
                 }}
               >
                 {ch}
@@ -195,7 +197,7 @@ export default function HeroSection() {
                   ref={(el) => {
                     subRefs.current[i] = el;
                   }}
-                  style={{ display: 'inline-block' }}
+                  style={{ display: 'inline-block', transform: 'translateY(112%)' }}
                 >
                   {w}
                   {i < subLine1.length - 1 ? ' ' : ''}
@@ -213,7 +215,7 @@ export default function HeroSection() {
                   ref={(el) => {
                     subRefs.current[subLine1.length + i] = el;
                   }}
-                  style={{ display: 'inline-block' }}
+                  style={{ display: 'inline-block', transform: 'translateY(112%)' }}
                 >
                   {w}
                   {i < subLine2.length - 1 ? ' ' : ''}
@@ -236,6 +238,8 @@ export default function HeroSection() {
           gap: 24,
           alignItems: 'flex-end',
           paddingTop: 0,
+          opacity: 0,
+          transform: 'translateY(16px)',
         }}
       >
         {/* Left: bio + socials */}
@@ -317,6 +321,7 @@ export default function HeroSection() {
             flexDirection: 'column',
             alignItems: 'center',
             gap: 10,
+            opacity: 0,
           }}
         >
           <span
@@ -427,7 +432,7 @@ export default function HeroSection() {
           paddingTop: '40px',
         }}
       >
-        <div ref={svgRef}>
+        <div ref={svgRef} style={{ opacity: 0, transform: 'translateY(30px) scale(0.95)' }}>
           <Image 
             src="/hero.svg" 
             alt="Hero illustration"

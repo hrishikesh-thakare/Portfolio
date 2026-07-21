@@ -1,5 +1,7 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import gsap from 'gsap';
 
 interface Project {
   num: string;
@@ -21,6 +23,17 @@ interface Project {
 export default function ProjectItem({ project }: { project: Project }) {
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (sliderRef.current) {
+      gsap.to(sliderRef.current, {
+        xPercent: -currentImgIndex * 100,
+        duration: 0.6,
+        ease: 'power3.inOut'
+      });
+    }
+  }, [currentImgIndex]);
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -133,12 +146,11 @@ export default function ProjectItem({ project }: { project: Project }) {
         {project.images && project.images.length > 0 ? (
           <>
             <div
+              ref={sliderRef}
               style={{
                 display: 'flex',
                 width: '100%',
                 height: '100%',
-                transform: `translateX(-${currentImgIndex * 100}%)`,
-                transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
               }}
             >
               {project.images.map((src, idx) => (
@@ -150,12 +162,12 @@ export default function ProjectItem({ project }: { project: Project }) {
                     position: 'relative'
                   }}
                 >
-                  <img
+                  <Image
                     src={src}
                     alt={`${project.title} Preview ${idx + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     style={{
-                      width: '100%',
-                      height: '100%',
                       objectFit: 'cover',
                       objectPosition: 'center',
                     }}

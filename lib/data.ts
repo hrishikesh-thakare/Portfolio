@@ -1,6 +1,8 @@
 export const SITE_URL = "https://hrishikeshthakare.dev";
-export const CV_VIEW_URL = "https://drive.google.com/file/d/1x4rHSJsXmmza-mwbG5-HuTrrpVS3AmM7/view?usp=sharing";
-export const CV_DOWNLOAD_URL = "https://drive.google.com/file/d/1x4rHSJsXmmza-mwbG5-HuTrrpVS3AmM7/view?usp=sharing";
+export const CV_VIEW_URL =
+  "https://drive.google.com/file/d/1x4rHSJsXmmza-mwbG5-HuTrrpVS3AmM7/view?usp=sharing";
+export const CV_DOWNLOAD_URL =
+  "https://drive.google.com/file/d/1x4rHSJsXmmza-mwbG5-HuTrrpVS3AmM7/view?usp=sharing";
 
 export const personal = {
   name: "Hrishikesh Thakare",
@@ -19,12 +21,15 @@ export const projects = [
   {
     num: "01",
     title: "FitLedger – Personal Gym Workout Tracker",
-    desc: "Routine-first fitness tracking app enabling users to create workout routines, log exercises (sets, reps, weight), track workout history, and monitor body-weight progress. Full-stack with offline-ready architecture and responsive mobile UI.",
+    desc: "Routine-first fitness tracking app enabling users to create workout routines, log exercises (sets, reps, weight), track workout history, monitor body-weight progress, with seamless workout logging and progress visualization.",
     tags: ["React Native", "Expo", "Payload CMS", "PostgreSQL", "TypeScript"],
     year: "2026",
     slug: "fitledger",
-    images: ["/images/projects/fitledger/preview1.jpg", "/images/projects/fitledger/preview2.jpg"],
-    href: "https://github.com/hrishikesh-thakare/FitLedger",
+    images: [
+      "/images/projects/fitledger/preview1.jpg",
+      "/images/projects/fitledger/preview2.jpg",
+    ],
+    href: "https://github.com/hrishikesh-thakare/Fit-Ledger",
     featured: true,
     company: "Personal Project",
     logo: "FL",
@@ -33,16 +38,16 @@ export const projects = [
   },
   {
     num: "02",
-    title: "Smart Product Warranty Tracker",
+    title: "Xpire - Smart Product Warranty Tracker",
     desc: "Mobile warranty-management app that helps users digitize receipts, track product warranty periods, receive timely reminders, and manage purchase records. Integrates intelligent receipt parsing, secure document storage, and AI-assisted warranty claim email generation.",
     tags: ["React Native", "Firebase", "Google Document AI", "Gemini API"],
     year: "2026",
     slug: "smart-product-warranty-tracker",
     images: [
       "/images/projects/smart-product-warranty-tracker/preview1.png",
-      "/images/projects/smart-product-warranty-tracker/preview2.png"
+      "/images/projects/smart-product-warranty-tracker/preview2.png",
     ],
-    href: "https://github.com/hrishikesh-thakare/Smart-Product-Warranty-Tracker",
+    href: "https://github.com/hrishikesh-thakare/warranty-reminder-app",
     featured: true,
     company: "Hackathon Project",
     logo: "SW",
@@ -52,13 +57,13 @@ export const projects = [
   {
     num: "03",
     title: "Multilingual Text Summarizer",
-    desc: "Web-based NLP system that automatically summarizes English text and translates it into Indian languages (Hindi and Marathi) for enhanced accessibility and comprehension. Uses extractive summarization and translation through a RESTful full-stack architecture.",
+    desc: "Web-based NLP system that automatically summarizes English text and translates it into Indian languages (Hindi and Marathi) for enhanced accessibility and comprehension. Uses TF-IDF-based extractive summarization with positional weighting and length normalization.",
     tags: ["React.js", "Flask", "NLTK", "Scikit-learn", "Googletrans API"],
     year: "2025",
     slug: "multilingual-text-summarizer",
     images: [
       "/images/projects/multilingual-text-summarizer/preview1.png",
-      "/images/projects/multilingual-text-summarizer/preview2.png"
+      "/images/projects/multilingual-text-summarizer/preview2.png",
     ],
     href: "https://github.com/hrishikesh-thakare/Multilingual-Text-Summarizer",
     featured: true,
@@ -70,17 +75,17 @@ export const projects = [
   {
     num: "04",
     title: "ThePuranik – Blog Website",
-    desc: "Blog website with an old manuscript-style aesthetic. Built with a structured content management system featuring posts, tags, and media handling. Focused on scalable architecture and modern CMS-based development practices.",
+    desc: "Manuscript-themed blog platform with a structured content management system featuring posts, tags, media management, and role-based access control, enabling non-technical users to create and publish content independently.",
     tags: ["Payload CMS", "Next.js", "TypeScript", "Tailwind CSS"],
     year: "2026",
     slug: "thepuranik",
     images: [
       "/images/projects/thepuranik/preview1.png",
-      "/images/projects/thepuranik/preview2.png"
+      "/images/projects/thepuranik/preview2.png",
     ],
-    href: "https://github.com/hrishikesh-thakare/ThePuranik",
+    href: "https://github.com/hrishikesh-thakare/puranic-blog",
     featured: true,
-    company: "SpriteGenix",
+    company: "Internship Project",
     logo: "TP",
     logoUrl: "",
     logoColor: "#2a1a2a",

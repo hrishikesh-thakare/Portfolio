@@ -68,15 +68,7 @@ body {
   background: var(--accent-dim) !important;
 }
 
-@keyframes ping-dot {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 0 9px rgba(74, 222, 128, 0);
-  }
-}
+
 @keyframes scroll-line {
   0% {
     transform: scaleY(0);
@@ -160,22 +152,6 @@ body {
 }
 
 
-/* Work row - collapses tags below title on mobile */
-.work-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 32px;
-}
-@media (max-width: 640px) {
-  .work-row {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .work-row-meta {
-    display: none;
-  }
-}
 
 /* Nav */
 @media (max-width: 768px) {
@@ -187,86 +163,3 @@ body {
   }
 }
 
-/* Hero bottom bar */
-@media (max-width: 900px) {
-  .hero-bottom {
-    grid-template-columns: 1fr 1fr !important;
-  }
-  .hero-right {
-    grid-column: 1 / -1 !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-  }
-}
-@media (max-width: 640px) {
-  .hero-bottom {
-    grid-template-columns: 1fr !important;
-    padding-top: 32px !important;
-  }
-  .hero-right {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 16px !important;
-  }
-  .hero-cta-row {
-    flex-wrap: wrap !important;
-  }
-}
-
-/* About timeline */
-@media (max-width: 900px) {
-  .timeline-row {
-    grid-template-columns: 120px 1fr !important;
-  }
-  .timeline-desc {
-    grid-column: 2 !important;
-  }
-}
-@media (max-width: 640px) {
-  .timeline-row {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
-}
-
-/* Generic col grids */
-@media (max-width: 768px) {
-  .grid-2col {
-    grid-template-columns: 1fr !important;
-    gap: 32px !important;
-  }
-  .grid-3col {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
-  }
-  .grid-cats {
-    grid-template-columns: 1fr !important;
-    gap: 40px !important;
-  }
-  .contact-name-email {
-    grid-template-columns: 1fr !important;
-  }
-  .contact-layout {
-    grid-template-columns: 1fr !important;
-    gap: 48px !important;
-  }
-}
-
-/* Terminal mobile */
-@media (max-width: 640px) {
-  .terminal-window {
-    width: calc(100vw - 24px) !important;
-    left: 12px !important;
-    top: 60px !important;
-  }
-}
-
-/* Shortcut panel mobile */
-@media (max-width: 480px) {
-  .shortcuts-panel {
-    width: calc(100vw - 32px) !important;
-    left: 16px !important;
-    right: 16px !important;
-  }
-}

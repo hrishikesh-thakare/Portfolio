@@ -34,12 +34,20 @@ export default function PointerHighlight({
   }, []);
 
   return (
-    <span ref={containerRef} style={{ position: "relative", display: "inline-block" }}>
-      {children}
-      {dimensions.width > 0 && (
-        <motion.span
-          aria-hidden="true"
-          style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}
+    <>
+      <style>{`
+        @media (max-width: 768px) {
+          .pointer-highlight-cursor {
+            display: none !important;
+          }
+        }
+      `}</style>
+      <span ref={containerRef} style={{ position: "relative", display: "inline-block" }}>
+        {children}
+        {dimensions.width > 0 && (
+          <motion.span
+            aria-hidden="true"
+            style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
@@ -61,6 +69,7 @@ export default function PointerHighlight({
           />
           {/* Pointer in bottom-right corner */}
           <motion.span
+            className="pointer-highlight-cursor"
             style={{
               position: "absolute",
               color,
@@ -81,5 +90,6 @@ export default function PointerHighlight({
         </motion.span>
       )}
     </span>
+    </>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import gsap from "gsap";
 
 const links = [
   { href: "/#work", label: "Experience" },
@@ -14,6 +15,27 @@ export default function NavStatic() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [time, setTime] = useState("");
   const pathname = usePathname();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (menuRef.current) {
+      if (mobileOpen) {
+        gsap.to(menuRef.current, {
+          height: "auto",
+          opacity: 1,
+          duration: 0.4,
+          ease: "power3.out",
+        });
+      } else {
+        gsap.to(menuRef.current, {
+          height: 0,
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.inOut",
+        });
+      }
+    }
+  }, [mobileOpen]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -40,16 +62,9 @@ export default function NavStatic() {
       const targetId = href.replace("/", ""); // '#projects' or '#contact'
       if (pathname === "/") {
         e.preventDefault();
-        if (targetId === "#contact") {
-          window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: "smooth",
-          });
-        } else {
-          const element = document.querySelector(targetId);
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-          }
+        const element = document.querySelector(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }
     }
@@ -102,7 +117,7 @@ export default function NavStatic() {
                   color: isActive ? "var(--text)" : "var(--muted)",
                   textDecoration: "none",
                   transition: "color .1s ease",
-                  fontWeight: isActive ? 500 : 300,
+                  fontWeight: isActive ? 600 : 500,
                   borderBottom: isActive
                     ? "1px solid var(--accent)"
                     : "1px solid transparent",
@@ -164,51 +179,61 @@ export default function NavStatic() {
             {mobileOpen ? "✕" : "☰"}
           </button>
         </div>
-      </header>
 
-      {/* Mobile dropdown */}
-      {mobileOpen && (
-        <nav
+        {/* Mobile dropdown */}
+        <div
+          ref={menuRef}
           style={{
-            position: "relative",
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            right: 0,
             zIndex: 99,
             background: "var(--surface)",
             borderBottom: "1px solid var(--border)",
-            display: "flex",
-            flexDirection: "column",
-            padding: "16px 20px",
-            gap: 4,
+            overflow: "hidden",
+            height: 0,
+            opacity: 0,
           }}
         >
-          {links.map((l) => {
-            const isActive =
-              l.href === "/" ? pathname === "/" : pathname.startsWith(l.href);
-            return (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={(e) => {
-                  setMobileOpen(false);
-                  handleScroll(e, l.href);
-                }}
-                style={{
-                  fontSize: 13,
-                  letterSpacing: ".08em",
-                  textTransform: "uppercase",
-                  color: isActive ? "var(--accent)" : "var(--muted)",
-                  textDecoration: "none",
-                  padding: "12px 0",
-                  borderBottom: "1px solid var(--border)",
-                  transition: "color .2s",
-                  fontWeight: isActive ? 500 : 300,
-                }}
-              >
-                {l.label}
-              </Link>
-            );
-          })}
-        </nav>
-      )}
+          <nav
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              padding: "16px 20px 8px 20px",
+              gap: 4,
+            }}
+          >
+            {links.map((l, index) => {
+              const isActive =
+                l.href === "/" ? pathname === "/" : pathname.startsWith(l.href);
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  onClick={(e) => {
+                    setMobileOpen(false);
+                    handleScroll(e, l.href);
+                  }}
+                  style={{
+                    fontSize: 13,
+                    letterSpacing: ".08em",
+                    textTransform: "uppercase",
+                    color: isActive ? "var(--accent)" : "var(--muted)",
+                    textDecoration: "none",
+                    padding: "12px 0",
+                    borderBottom: index === links.length - 1 ? "none" : "1px solid var(--border)",
+                    transition: "color .2s",
+                    fontWeight: isActive ? 600 : 500,
+                  }}
+                >
+                  {l.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+      </header>
 
       <style>{`
         @keyframes pulse {

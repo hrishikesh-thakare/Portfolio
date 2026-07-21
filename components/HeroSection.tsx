@@ -1,8 +1,10 @@
 'use client';
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { socials } from '@/lib/data';
 import PointerHighlight from './PointerHighlight';
+
 
 const icons: Record<string, string> = {
   github:
@@ -23,6 +25,7 @@ export default function HeroSection() {
   const subRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
   const cueRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<HTMLDivElement>(null);
 
 
   const name = ['H', 'R', 'I', 'S', 'H', 'I', 'K', 'E', 'S', 'H'];
@@ -33,18 +36,19 @@ export default function HeroSection() {
     const chars = charRefs.current.filter(Boolean) as HTMLSpanElement[];
     const subs = subRefs.current.filter(Boolean) as HTMLSpanElement[];
 
-    // Set initial hidden state via GSAP (not inline styles) so SSR renders visibly
     gsap.set(eyebrowRef.current, { y: '110%' });
     gsap.set(chars, { y: '112%' });
     gsap.set(subs, { y: '112%' });
     gsap.set(bottomRef.current, { opacity: 0, y: 16 });
     gsap.set(cueRef.current, { opacity: 0 });
+    gsap.set(svgRef.current, { opacity: 0, y: 30, scale: 0.95 });
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.1 });
     tl.to(eyebrowRef.current, { y: 0, duration: 0.7 })
       .to(chars, { y: 0, duration: 1, stagger: 0.06 }, '-=0.5')
       .to(subs, { y: 0, duration: 0.8, stagger: 0.07 }, '-=0.7')
       .to(bottomRef.current, { opacity: 1, y: 0, duration: 0.8 }, '-=0.4')
+      .to(svgRef.current, { opacity: 1, y: 0, scale: 1, duration: 1.2 }, '-=0.6')
       .to(cueRef.current, { opacity: 1, duration: 0.5 }, '-=0.3');
 
     return () => {
@@ -54,6 +58,7 @@ export default function HeroSection() {
 
   return (
     <section
+      className="hero-section"
       style={{
         position: 'relative',
         minHeight: 'calc(100svh - 61px)',
@@ -70,8 +75,8 @@ export default function HeroSection() {
           .hero-section { padding-left: 32px !important; padding-right: 32px !important; }
         }
         @media (max-width: 640px) {
-          .hero-section { padding: 32px 20px 80px !important; }
-          .hero-bottom  { grid-template-columns: 1fr !important; padding-top: 32px !important; }
+          .hero-section { padding: 32px 30px 80px !important; gap: 20px !important; }
+          .hero-bottom  { grid-template-columns: 1fr !important; padding-top: 12px !important; }
           .hero-right   { align-items: flex-start !important; }
           .hero-cta-row { flex-wrap: wrap !important; }
           .hero-scroll-cue { display: none !important; }
@@ -84,11 +89,28 @@ export default function HeroSection() {
         }
         @media (max-width: 900px) {
           .mobile-swipe-indicator { display: flex !important; }
+          .hero-side-svg {
+            position: relative !important;
+            right: auto !important;
+            bottom: auto !important;
+            width: clamp(200px, 60vw, 320px) !important;
+            opacity: 0.95 !important;
+            z-index: 1 !important;
+            margin: 0 auto !important;
+            padding-top: 0 !important;
+          }
         }
         @keyframes swipe-bounce {
           0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
           40% { transform: translateY(-6px); }
           60% { transform: translateY(-3px); }
+        }
+        @keyframes float-svg {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-12px); }
+        }
+        .hero-side-svg {
+          animation: float-svg 5s ease-in-out infinite;
         }
       `}</style>
 
@@ -141,12 +163,6 @@ export default function HeroSection() {
                 }}
                 style={{
                   display: 'inline-block',
-                  ...(i >= 2
-                    ? {
-                        WebkitTextStroke: '1.5px var(--text)',
-                        color: 'transparent',
-                      }
-                    : {}),
                 }}
               >
                 {ch}
@@ -396,6 +412,31 @@ export default function HeroSection() {
         >
           <path d="M12 5v14M19 12l-7 7-7-7" />
         </svg>
+      </div>
+
+      {/* Hero Side SVG */}
+      <div
+        className="hero-side-svg"
+        style={{
+          position: 'absolute',
+          right: '5%',
+          bottom: '6%',
+          width: 'clamp(180px, 28vw, 390px)',
+          zIndex: -1,
+          pointerEvents: 'none',
+          paddingTop: '40px',
+        }}
+      >
+        <div ref={svgRef}>
+          <Image 
+            src="/undraw_build-mode_aa78 (1).svg" 
+            alt="Developer Building"
+            width={390}
+            height={300}
+            style={{ width: '100%', height: 'auto', opacity: 0.9 }}
+            priority
+          />
+        </div>
       </div>
     </section>
   );

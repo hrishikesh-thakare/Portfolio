@@ -199,10 +199,7 @@ export default function ContactSection() {
             a message and I&apos;ll reply within 24 hours.
           </p>
 
-          <div style={{ marginTop: 48, paddingTop: 32, borderTop: '1px solid var(--border)', maxWidth: 440 }}>
-            <span style={{ fontSize: 10, letterSpacing: '.2em', textTransform: 'uppercase', color: 'var(--muted)', display: 'block', marginBottom: 16 }}>
-              Resume
-            </span>
+          <div style={{ marginTop: 48, maxWidth: 440 }}>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a
                 href={CV_VIEW_URL}

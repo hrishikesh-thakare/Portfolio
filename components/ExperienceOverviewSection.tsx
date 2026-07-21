@@ -171,8 +171,8 @@ function ExperienceItem({ exp }: { exp: typeof experience[0] }) {
                   flexShrink: 0,
                   transform: 'translateY(-1px)',
                 }}
-                width="12"
-                height="12"
+                width="9"
+                height="9"
                 viewBox="0 0 18 18"
                 fill="none"
                 aria-hidden="true"

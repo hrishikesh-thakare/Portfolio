@@ -78,27 +78,10 @@ export const metadata: Metadata = {
     siteName: `${FULL_NAME} - Portfolio`,
     title: TITLE,
     description: DESCRIPTION,
-    images: [
-      {
-        url: `${SITE_URL}/og-image.JPG`,
-        width: 1200,
-        height: 630,
-        alt: `${FULL_NAME} - Software Developer`,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-    creator: '@hrishikeshthakare',
-    images: [`${SITE_URL}/og-image.JPG`],
+    images: [],
   },
 
   manifest: '/site.webmanifest',
-  verification: {
-    google: '',
-  },
   category: 'technology',
   classification: 'Software Engineering Portfolio',
   other: {

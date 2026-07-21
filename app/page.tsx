@@ -25,12 +25,7 @@ const graphSchema = {
       givenName: 'Hrishikesh',
       familyName: 'Thakare',
       url: SITE_URL,
-      image: {
-        '@type': 'ImageObject',
-        url: `${SITE_URL}/og-image.JPG`,
-        width: 1200,
-        height: 630,
-      },
+
       jobTitle: 'Full Stack Developer',
       description:
         'Detail-oriented Full Stack Developer specializing in MERN, Next.js, and React Native. Experienced in building scalable web and mobile applications with REST APIs, databases, and modern development tools. Based in Mumbai, India.',
@@ -91,7 +86,7 @@ const graphSchema = {
         description:
           'Builds scalable web and mobile applications using MERN stack, Next.js, React Native, and modern development tools.',
         skills:
-          'React.js, Next.js, TypeScript, JavaScript, Node.js, Express.js, React Native, PostgreSQL, MongoDB, Redis, AWS, Docker, Firebase, Flask, Payload CMS, Tailwind CSS, Python, Java',
+          'React.js, Next.js, TypeScript, JavaScript, Node.js, Express.js, React Native, PostgreSQL, MongoDB, Firebase, Flask, Payload CMS, Tailwind CSS, Python, Java',
       },
       knowsAbout: [
         'React.js',
@@ -103,9 +98,6 @@ const graphSchema = {
         'React Native',
         'PostgreSQL',
         'MongoDB',
-        'Redis',
-        'AWS',
-        'Docker',
         'Firebase',
         'Supabase',
         'Flask',
@@ -115,7 +107,6 @@ const graphSchema = {
         'Java',
         'REST APIs',
         'JWT',
-        'TensorFlow',
         'Scikit-learn',
         'Git',
         'Linux',
@@ -173,9 +164,9 @@ const graphSchema = {
         ],
       },
       significantLink: [
-        `${SITE_URL}/projects`,
-        `${SITE_URL}/stack`,
-        `${SITE_URL}/contact`,
+        `${SITE_URL}/#projects`,
+        `${SITE_URL}/#stack`,
+        `${SITE_URL}/#contact`,
       ],
     },
     {
@@ -192,7 +183,7 @@ const graphSchema = {
       ],
       availableChannel: {
         '@type': 'ServiceChannel',
-        serviceUrl: `${SITE_URL}/contact`,
+        serviceUrl: `${SITE_URL}/#contact`,
         availableLanguage: 'English',
       },
       hasOfferCatalog: {
@@ -339,7 +330,6 @@ export default function Home() {
       <ExperienceOverviewSection />
       <ProjectsSection />
       <StackSection />
-      {/* <ServicesSection /> */}
       <ContactSection />
       <FooterSection />
     </main>

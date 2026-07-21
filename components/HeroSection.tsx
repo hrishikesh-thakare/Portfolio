@@ -429,8 +429,8 @@ export default function HeroSection() {
       >
         <div ref={svgRef}>
           <Image 
-            src="/undraw_build-mode_aa78 (1).svg" 
-            alt="Developer Building"
+            src="/hero.svg" 
+            alt="Hero illustration"
             width={390}
             height={300}
             style={{ width: '100%', height: 'auto', opacity: 0.9 }}

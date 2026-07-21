@@ -105,7 +105,7 @@ export const experience = [
     logo: "SG",
     logoUrl: spriteGenixLogo,
     logoColor: "#1a3a1a",
-    domain: "",
+    domain: "spritegenix.com",
   },
 ];
 

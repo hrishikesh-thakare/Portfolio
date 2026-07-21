@@ -63,7 +63,7 @@ export default function ShortcutsPanel() {
           window.location.href = "/";
           break;
         case "S":
-          window.location.href = "/stack";
+          window.location.href = "/#stack";
           break;
         case "W":
           window.location.href = "/#work";
